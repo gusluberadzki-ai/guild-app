@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="420" viewBox="0 0 640 420">
+  <defs>
+    <linearGradient id="g2" x1="1" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#f08a4b"/>
+      <stop offset="1" stop-color="#5fe1c2"/>
+    </linearGradient>
+  </defs>
+  <rect width="640" height="420" rx="24" fill="#121d23"/>
+  <rect x="60" y="60" width="520" height="280" rx="22" fill="#203844"/>
+  <rect x="100" y="100" width="200" height="200" rx="20" fill="#263f4c"/>
+  <circle cx="200" cy="200" r="70" fill="url(#g2)"/>
+  <rect x="340" y="110" width="200" height="30" rx="8" fill="#2a4652"/>
+  <rect x="340" y="160" width="170" height="22" rx="8" fill="#2a4652"/>
+  <rect x="340" y="200" width="140" height="22" rx="8" fill="#2a4652"/>
+  <text x="60" y="360" fill="#b7c4c9" font-family="Space Grotesk, sans-serif" font-size="16">Collaborative learning</text>
+</svg>
