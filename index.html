@@ -1,0 +1,507 @@
+4<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Guild - Quest Learning Platform</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="bg" aria-hidden="true"></div>
+
+    <header class="top">
+      <div class="logo">Guild</div>
+      <nav class="nav" id="nav">
+        <button class="nav-link is-active" data-page="home">Home</button>
+        <button class="nav-link" data-page="quests">Quests</button>
+        <button class="nav-link" data-page="verify">Verify</button>
+        <button class="nav-link" data-page="igcse">IGCSE</button>
+        <button class="nav-link" data-page="ib">IB</button>
+        <button class="nav-link" data-page="stats">Stats</button>
+        <button class="nav-link" data-page="about">About</button>
+        <button class="nav-link" data-page="contact">Contact</button>
+        <button class="nav-link" data-page="account">Account</button>
+      </nav>
+      <div class="nav-cta">
+        <button class="ghost" data-action="open-stats">View Stats</button>
+        <button class="primary" data-action="start-quest">Start Quest</button>
+      </div>
+    </header>
+
+    <main class="shell">
+      <section class="page is-active" id="home">
+        <div class="hero">
+          <div class="hero-copy">
+            <div class="pill">Compliance-first education</div>
+            <h1>Quest-based learning that builds real-world habits.</h1>
+            <p>
+              Kids record learning or home-help tasks. The AI validates completion and
+              rewards points instantly. Sponsors can fund skill-based quests while
+              keeping tasks safe and education-focused.
+            </p>
+            <div class="cta-row">
+              <button class="primary" data-action="start-quest">Start a Quest</button>
+              <button class="secondary" data-action="go-verify">Verify Homework</button>
+            </div>
+            <div class="badges">
+              <span>Learning + home help only</span>
+              <span>Instant feedback loop</span>
+              <span>Verified activity history</span>
+            </div>
+          </div>
+          <div class="hero-card">
+            <div class="card-head">Today's Party</div>
+            <div class="party">
+              <div class="avatar" aria-hidden="true"></div>
+              <div>
+                <div class="name" id="heroName">Learner</div>
+                <div class="level" id="heroLevel">Level 1 - Starting out</div>
+              </div>
+            </div>
+            <div class="meter">
+              <div class="meter-bar" id="levelBar"></div>
+            </div>
+            <div class="stat-row">
+              <div>
+                <div class="stat" id="statPoints">0</div>
+                <div class="label">Points</div>
+              </div>
+              <div>
+                <div class="stat" id="statStreak">0</div>
+                <div class="label">Streak</div>
+              </div>
+              <div>
+                <div class="stat" id="statSkills">0</div>
+                <div class="label">Skills</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="feature-grid">
+          <div class="feature-card">
+            <h3>Live Proof, Fast Rewards</h3>
+            <p>Capture homework or home-help tasks and receive instant feedback.</p>
+          </div>
+          <div class="feature-card">
+            <h3>Sponsor Skill Tracks</h3>
+            <p>Companies can fund points for learning achievements, not labor.</p>
+          </div>
+          <div class="feature-card">
+            <h3>Trusted Activity History</h3>
+            <p>Build a secure timeline of consistent effort and growth.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="page" id="quests" data-requires-auth="true">
+        <div class="board">
+          <div class="board-head">
+            <h2>Active Quests</h2>
+            <div class="filters" id="questFilters">
+              <button class="pill is-active" data-filter="all">All</button>
+              <button class="pill" data-filter="learning">Learning</button>
+              <button class="pill" data-filter="home">Home Help</button>
+              <button class="pill" data-filter="sponsored">Sponsored</button>
+            </div>
+          </div>
+          <div class="quest-grid" id="questGrid"></div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-card">
+            <h3>Live Verification</h3>
+            <div class="camera">
+              <div class="camera-feed">
+                <video id="cameraPreview" autoplay playsinline muted></video>
+                <div class="camera-overlay" id="cameraOverlay">Camera preview</div>
+              </div>
+              <div class="camera-actions">
+                <button class="primary" id="startCamera">Start Camera</button>
+                <button class="secondary" id="recordCamera">Record</button>
+                <button class="ghost" id="stopCamera">Stop</button>
+              </div>
+              <p class="muted">Uses the browser camera. Evidence can be uploaded for AI checks.</p>
+            </div>
+            <div class="ai-log" id="aiLog">
+              <div class="log-title">AI Verdict</div>
+              <div class="log-entry success">Waiting for evidence...</div>
+            </div>
+          </div>
+
+          <div class="panel-card">
+            <h3>Sponsor Missions</h3>
+            <p class="muted">Sponsor points are tied to learning achievements only.</p>
+            <div class="sponsor" id="sponsorList"></div>
+          </div>
+
+          <div class="panel-card">
+            <h3>Verified Activity History</h3>
+            <p class="muted">A reliable record of effort and skill growth.</p>
+            <div class="timeline" id="timeline"></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="page" id="verify" data-requires-auth="true">
+        <div class="split">
+          <div class="panel-card">
+            <h3>Record Homework</h3>
+            <p class="muted">Use your Mac camera to record proof for AI checking.</p>
+            <div class="camera">
+              <div class="camera-feed">
+                <video id="verifyPreview" autoplay playsinline muted></video>
+                <div class="camera-overlay" id="verifyOverlay">Camera idle</div>
+              </div>
+              <div class="camera-actions">
+                <button class="primary" id="verifyStart">Start Camera</button>
+                <button class="secondary" id="verifyRecord">Record</button>
+                <button class="ghost" id="verifyStop">Stop</button>
+              </div>
+              <div class="pill-row" id="recordStatus">No recording yet.</div>
+            </div>
+          </div>
+
+          <div class="panel-card">
+            <h3>Upload Assignment</h3>
+            <p class="muted">Upload Word, PDF, PowerPoint, images, or video evidence.</p>
+            <input class="file-input" id="docInput" type="file" accept=".pdf,.doc,.docx,.ppt,.pptx,.txt,.png,.jpg,.jpeg,.webp,.heic,.mp4,.mov" />
+            <div class="file-preview" id="filePreview">
+              <div class="preview-placeholder">No file selected</div>
+            </div>
+            <div class="file-meta" id="fileMeta"></div>
+            <div class="doc-result" id="docResult">
+              <div class="log-title">Check Summary</div>
+              <div class="log-entry pending">Awaiting upload...</div>
+            </div>
+            <button class="primary" id="runChecks">Run Checks</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="page" id="igcse" data-requires-auth="true">
+        <div class="igcse-head">
+          <div>
+            <h2>IGCSE Programs</h2>
+            <p class="muted">Search every subject and open a program outline.</p>
+          </div>
+          <div class="igcse-controls">
+            <input id="igcseSearch" class="text-input" placeholder="Search subject or code" />
+            <select id="igcseFilter" class="text-input">
+              <option value="all">All Groups</option>
+              <option value="creative">Creative & Professional</option>
+              <option value="english">English Language & Literature</option>
+              <option value="humanities">Humanities & Social Sciences</option>
+              <option value="languages">Languages</option>
+              <option value="math">Mathematics</option>
+              <option value="sciences">Sciences</option>
+            </select>
+          </div>
+        </div>
+        <div class="igcse-grid">
+          <div class="igcse-list" id="igcseList"></div>
+          <div class="igcse-detail" id="igcseDetail">
+            <div class="detail-placeholder">Select a subject to view the program.</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="page" id="ib" data-requires-auth="true">
+        <div class="igcse-head">
+          <div>
+            <h2>IB Programs</h2>
+            <p class="muted">Browse IB subjects and open practice packs.</p>
+          </div>
+          <div class="igcse-controls">
+            <input id="ibSearch" class="text-input" placeholder="Search IB subject" />
+          </div>
+        </div>
+        <div class="igcse-grid">
+          <div class="igcse-list" id="ibList"></div>
+          <div class="igcse-detail" id="ibDetail">
+            <div class="detail-placeholder">Select an IB subject to view the program.</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="page" id="stats" data-requires-auth="true">
+        <div class="stats-head">
+          <h2>Statistics Dashboard</h2>
+          <p class="muted">Track consistency, skill growth, and sponsor impact.</p>
+        </div>
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat" id="statCompletion">0%</div>
+            <div class="label">Quest completion</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat" id="statAvgStreak">0</div>
+            <div class="label">Avg. weekly streak</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat" id="statTotalPoints">0</div>
+            <div class="label">Total points</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat" id="statSponsorSkills">0</div>
+            <div class="label">Sponsor skills</div>
+          </div>
+        </div>
+        <div class="cta-row">
+          <button class="secondary" id="refreshStats">Refresh Stats</button>
+          <button class="ghost" id="resetStats">Reset My Stats</button>
+          <button class="ghost" id="resetAllStats">Reset All Local Stats</button>
+        </div>
+        <div class="chart">
+          <div class="chart-bar" style="--value: 0%">Mon</div>
+          <div class="chart-bar" style="--value: 0%">Tue</div>
+          <div class="chart-bar" style="--value: 0%">Wed</div>
+          <div class="chart-bar" style="--value: 0%">Thu</div>
+          <div class="chart-bar" style="--value: 0%">Fri</div>
+          <div class="chart-bar" style="--value: 0%">Sat</div>
+          <div class="chart-bar" style="--value: 0%">Sun</div>
+        </div>
+      </section>
+
+      <section class="page" id="about">
+        <div class="about-grid">
+          <div>
+            <h2>About Us</h2>
+            <p class="muted" id="aboutContent"></p>
+            <button class="secondary" id="editAbout">Edit About (Admin)</button>
+          </div>
+          <div class="image-grid">
+            <img src="assets/student-1.svg" alt="Student learning with a computer" />
+            <img src="assets/student-2.svg" alt="Student collaboration" />
+            <img src="assets/student-3.svg" alt="Student focused on creative study" />
+          </div>
+        </div>
+      </section>
+
+      <section class="page" id="contact" data-requires-auth="true">
+        <div class="contact-card">
+          <h2>Contact Us</h2>
+          <p class="muted">Questions, partnerships, or pilot requests.</p>
+          <div class="contact-actions">
+            <button class="primary" data-action="contact-email">Email Us</button>
+            <button class="secondary" data-action="request-pilot">Request Pilot</button>
+          </div>
+          <form id="contactForm" class="contact-form">
+            <input class="text-input" id="contactName" placeholder="Your name" />
+            <input class="text-input" id="contactEmail" placeholder="Your email" />
+            <textarea class="text-input" id="contactMessage" rows="4" placeholder="Message"></textarea>
+            <button class="primary" type="submit">Send Message</button>
+          </form>
+        </div>
+      </section>
+
+      <section class="page" id="account">
+        <div class="account-grid">
+          <div class="panel-card" id="profileCard">
+            <h3>Your Profile</h3>
+            <div class="profile-row">
+              <div class="profile-avatar" id="profileAvatar">G</div>
+              <div>
+                <div class="profile-name" id="profileName">Guest</div>
+                <div class="muted" id="profileEmail">Not signed in</div>
+              </div>
+            </div>
+            <input class="file-input" id="profilePhotoInput" type="file" accept="image/*" />
+            <div class="profile-actions">
+              <button class="secondary" id="editProfile">Edit Profile</button>
+              <button class="ghost" id="signOutTop">Sign Out</button>
+            </div>
+          </div>
+          <div class="panel-card">
+            <h3>Create an Account</h3>
+            <p class="muted">Secure local sign-up for this device.</p>
+            <form id="signupForm" class="stack">
+              <input class="text-input" id="signupName" placeholder="Full name" required />
+              <input class="text-input" id="signupEmail" placeholder="Email" required />
+              <div class="password-row">
+                <input class="text-input" id="signupPassword" type="password" placeholder="Password" required />
+                <button class="ghost" type="button" id="toggleSignupPassword">Show</button>
+              </div>
+              <div class="stack">
+                <label class="toggle">
+                  <input type="radio" name="accountType" value="normal" checked />
+                  <span>Normal account</span>
+                </label>
+                <label class="toggle">
+                  <input type="radio" name="accountType" value="admin_request" />
+                  <span>Admin request (24h approval)</span>
+                </label>
+              </div>
+              <button class="primary" type="submit">Create Account</button>
+            </form>
+          </div>
+          <div class="panel-card">
+            <h3>Sign In</h3>
+            <p class="muted">Use your email/password to sign in.</p>
+            <form id="signinForm" class="stack">
+              <input class="text-input" id="signinEmail" placeholder="Email" required />
+              <div class="password-row">
+                <input class="text-input" id="signinPassword" type="password" placeholder="Password" required />
+                <button class="ghost" type="button" id="toggleSigninPassword">Show</button>
+              </div>
+              <button class="secondary" type="submit">Sign In</button>
+              <button class="ghost" type="button" id="signOut">Sign Out</button>
+            </form>
+          </div>
+          <div class="panel-card">
+            <h3>Profile & Preferences</h3>
+            <p class="muted">Customize the learning experience for this account.</p>
+            <form id="prefsForm" class="stack">
+              <input class="text-input" id="prefDisplayName" placeholder="Display name" />
+              <input class="text-input" id="prefGoal" placeholder="Weekly goal (points)" />
+              <label class="toggle">
+                <input type="checkbox" id="prefSponsor" checked />
+                <span>Allow sponsor-backed quests</span>
+              </label>
+              <label class="toggle">
+                <input type="checkbox" id="prefNotifications" checked />
+                <span>Enable reminders</span>
+              </label>
+              <button class="secondary" type="submit">Save Preferences</button>
+            </form>
+          </div>
+          <div class="panel-card">
+            <h3>Sign in with Google</h3>
+            <p class="muted">Sign in with your real Google account.</p>
+            <button class="google-button" id="googleSignIn">Continue with Google</button>
+            <div class="muted">Signed in: <span id="signedInAs">Not signed in</span></div>
+          </div>
+          <div class="panel-card">
+            <h3>Sign in with Apple</h3>
+            <p class="muted">Apple sign-in requires a backend to verify tokens.</p>
+            <div class="stack">
+              <input class="text-input" id="appleServiceId" placeholder="Apple Services ID" />
+              <input class="text-input" id="appleRedirect" placeholder="Redirect URL" />
+              <button class="secondary" id="saveAppleConfig">Save Apple Config</button>
+              <button class="apple-button" id="appleButton">Continue with Apple</button>
+            </div>
+            <div class="muted" id="appleStatus">Not configured</div>
+          </div>
+          <div class="panel-card" id="accountSettings">
+            <h3>Account Settings</h3>
+            <p class="muted">Update your account details and security.</p>
+            <form id="accountForm" class="stack">
+              <input class="text-input" id="accountDisplayName" placeholder="Display name" />
+              <input class="text-input" id="accountEmail" placeholder="Email (read only)" disabled />
+              <div class="password-row">
+                <input class="text-input" id="accountPassword" type="password" placeholder="New password" />
+                <button class="ghost" type="button" id="toggleAccountPassword">Show</button>
+              </div>
+              <button class="secondary" type="submit">Save Account</button>
+            </form>
+          </div>
+          <div class="panel-card" id="adminAiCard">
+            <h3>Admin AI Routing</h3>
+            <p class="muted">Choose local or remote AI endpoint.</p>
+            <label class="toggle">
+              <input type="checkbox" id="aiRouteToggle" />
+              <span>Use local AI server</span>
+            </label>
+          </div>
+          <div class="panel-card" id="adminRequestsCard">
+            <h3>Admin Requests</h3>
+            <p class="muted">Approve admin requests within 24 hours.</p>
+            <div class="stack" id="adminRequestsList"></div>
+            <button class="secondary" id="refreshAdminRequests">Refresh</button>
+          </div>
+          <div class="panel-card" id="adminMembersCard">
+            <h3>Members</h3>
+            <p class="muted">All local app accounts on this browser.</p>
+            <div class="stack" id="adminMembersList"></div>
+            <button class="secondary" id="refreshMembers">Refresh Members</button>
+          </div>
+          <div class="panel-card" id="adminRequestSelfCard">
+            <h3>Admin Access</h3>
+            <p class="muted">Request admin access for this account.</p>
+            <div class="stack">
+              <button class="secondary" id="requestAdminAccess">Request Admin Access</button>
+              <div class="muted" id="requestAdminStatus">Sign in to request access.</div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <div class="modal" id="aboutModal" aria-hidden="true">
+      <div class="modal-card">
+        <div class="modal-head">
+          <h3>Edit About Us</h3>
+          <button class="ghost" id="closeAbout">Close</button>
+        </div>
+        <textarea id="aboutEditor" class="text-input" rows="8"></textarea>
+        <button class="primary" id="saveAbout">Save</button>
+      </div>
+    </div>
+
+    <div class="modal" id="statsModal" aria-hidden="true">
+      <div class="modal-card">
+        <div class="modal-head">
+          <h3>Statistics Snapshot</h3>
+          <button class="ghost" id="closeStats">Close</button>
+        </div>
+        <div class="stats-grid compact">
+          <div class="stat-card">
+            <div class="stat" id="modalCompletion">0%</div>
+            <div class="label">Quest completion</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat" id="modalStreak">0</div>
+            <div class="label">Day streak</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat" id="modalSkills">0</div>
+            <div class="label">Sponsor skills</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal" id="questModal" aria-hidden="true">
+      <div class="modal-card wide">
+        <div class="modal-head">
+          <h3 id="questTitle">Quest Details</h3>
+          <button class="ghost" id="closeQuest">Close</button>
+        </div>
+        <div class="quest-detail" id="questDetail"></div>
+      </div>
+    </div>
+
+    <div class="toast" id="toast"></div>
+    <button class="settings-fab" id="openSettings" aria-label="Open settings">&#9881;</button>
+    <aside class="settings-sidebar" id="settingsSidebar" aria-hidden="true">
+      <div class="settings-head">
+        <h3 id="settingsTitle">Settings</h3>
+        <button class="ghost" id="closeSettings">Close</button>
+      </div>
+      <div class="stack">
+        <label class="muted" id="settingsThemeLabel">Theme</label>
+        <label class="toggle"><input type="radio" name="themeMode" value="dark" checked /><span id="themeDarkLabel">Dark</span></label>
+        <label class="toggle"><input type="radio" name="themeMode" value="light" /><span id="themeLightLabel">Light</span></label>
+        <label class="toggle"><input type="radio" name="themeMode" value="red" /><span id="themeRedLabel">Red</span></label>
+        <label class="toggle"><input type="radio" name="themeMode" value="purple" /><span id="themePurpleLabel">Purple</span></label>
+      </div>
+      <div class="stack">
+        <label class="muted" id="settingsLanguageLabel">Language</label>
+        <select id="languageSelect" class="text-input"></select>
+      </div>
+      <div class="stack">
+        <label class="toggle">
+          <input type="checkbox" id="compactMode" />
+          <span id="compactModeLabel">Compact cards</span>
+        </label>
+      </div>
+      <div class="stack" id="settingsAdminWidget" style="display: none;">
+        <label class="muted">Admin</label>
+        <div class="muted" id="settingsMemberCount">Members: 0</div>
+        <button class="secondary" id="openMembersManager">Open Members Manager</button>
+      </div>
+    </aside>
+
+    <script type="module" src="app.js"></script>
+  </body>
+</html>
